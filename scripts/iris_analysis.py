@@ -6,6 +6,8 @@ A machine learning classifier for identifying/predicting
 the type of iris (ie. setosa, versicolor, or virginica)
 based on its (petal, sepal) features.
 """
+# for model persistence/reuse
+import pickle
 
 import numpy as np
 import pandas as pd
@@ -73,7 +75,7 @@ plt.show()
 ## (ie. 80% for training, 20% for validation)
 VALIDATION_SIZE = 0.20
 
-## set 'random_state' to ensure RESULTs are reproducible
+## set 'random_state' to ensure results are reproducible
 ## (ie. data is not split into random sets)
 SEED = 7
 
@@ -105,3 +107,14 @@ print(accuracy_score(TEST_LABELS, PREDICTIONS))
 ## 90% - of the two (both nonlinear), the nearest-neighbor model is better
 print(accuracy_score(TEST_LABELS, PREDICTIONS2))
 
+# save the (preferred) model to file in serialized format
+FILENAME = 'preferred_model.sav'
+pickle.dump(KNN, open(FILENAME, 'wb'))
+
+print('--------')
+
+# load the (saved) model from disk/de-serialize the algorithm
+# retrain not required
+LOADED_MODEL = pickle.load(open(FILENAME, 'rb'))
+RESULT = LOADED_MODEL.score(TEST, TEST_LABELS)
+print(RESULT)
