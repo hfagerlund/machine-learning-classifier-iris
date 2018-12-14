@@ -1,6 +1,9 @@
 *~
 !.gitignore
 
+# Pickle
+*.sav
+
 # Spyder project settings
 .spyderproject
 .spyproject
